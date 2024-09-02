@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Images</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        input[type="text"], input[type="file"], input[type="submit"] {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        input[type="text"] {
+            height: 100px;
+        }
+        input[type="file"] {
+            border: none;
+        }
+        input[type="submit"] {
+            background-color: #4a90e2;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #357abd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>RedBus App Feature Analyzer</h1>
+        <form action="/" method="post" enctype="multipart/form-data">
+            <label for="context">Optional Context:</label>
+            <textarea name="context" id="context" placeholder="Enter optional context here..."></textarea>
+            <label for="files">Select Images:</label>
+            <input type="file" name="files" id="files" multiple accept="image/*" required>
+            <input type="submit" value="Describe Features">
+        </form>
+    </div>
+</body>
+</html>
