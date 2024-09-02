@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Description</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1, h2 {
+            color: #333;
+        }
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        .highlight {
+            background: #e8f0fe;
+            border-left: 5px solid #4a90e2;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Image Descriptions</h1>
+        {% for result in descriptions %}
+            <div class="highlight">
+                <p><strong>Description:</strong></p>
+                <ul>
+                    {% for item in result['description'] %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                <h2>Identified Feature</h2>
+                <p><strong>Functionality:</strong></p>
+                <ul>
+                    {% for item in result['Functionality'] %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                <p><strong>User Interactions:</strong></p>
+                <ul>
+                    {% for item in result['User Interactions'] %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+                <p><strong>Edge Cases:</strong></p>
+                <ul>
+                    {% for item in result['Edge Cases'] %}
+                        <li>{{ item }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
