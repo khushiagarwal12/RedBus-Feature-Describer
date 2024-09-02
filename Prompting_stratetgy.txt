@@ -1,0 +1,22 @@
+## Prompting Strategy
+
+### Upload Page
+- **Optional Context Textarea:**
+  - Placeholder: `Enter optional context here...`
+- **File Selection:**
+  - Label: `Select Images:`
+  - Instructions: `Choose multiple images (PNG, JPG, JPEG) to analyze.`
+- **Submit Button:**
+  - Label: `Describe Features`
+
+### Results Page
+- **Headline:**
+  - `Image Descriptions`
+- **Instructions:**
+  - `Below are the detailed descriptions and feature analyses of your uploaded images.`
+
+### Error Messages
+- **Text Extraction Error:**
+  - `Error: No text extracted from the image. Please ensure the image is clear and readable.`
+- **Feature Identification Error:**
+  - `Feature not identified. The text extracted may not match any known features.`
