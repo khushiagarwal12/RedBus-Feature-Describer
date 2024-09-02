@@ -1,12 +1,15 @@
 from flask import Flask, request, render_template, redirect
 import google.generativeai as genai
-from PIL import Image
-import pytesseract
 import io
 
-
-pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
-
+# Attempt to import pytesseract and handle the ImportError
+try:
+    from PIL import Image
+    import pytesseract
+    pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
+except ImportError:
+    pytesseract = None
+    print("Warning: pytesseract is not installed. Text extraction from images will not be available.")
 
 api_key = "YOUR_API_KEY"  # Please replace with your API key
 genai.configure(api_key=api_key)
@@ -29,40 +32,82 @@ def extract_text_from_image(image_file):
     """
     Function to extract text from an image using pytesseract.
     """
+    if pytesseract is None:
+        return "Error: pytesseract is not installed. Text extraction is unavailable."
+    
     try:
         img = Image.open(image_file)
         text = pytesseract.image_to_string(img)
         return text
     except Exception as e:
         print(f"Error processing image: {e}")
-        return ""
+        return "Error: Unable to process the image."
 
 def identify_feature(text):
     """
     Function to identify which app feature the extracted text might be talking about.
     """
     features_info = {
-        'Booking': {
-            'Functionality': 'Allows users to book rides, reserve seats, or purchase tickets.',
-            'User Interactions': 'Users can search for available buses or trains, select a ride, and confirm their booking.',
-            'Edge Cases': 'No buses available, invalid seat selection, or booking errors.'
+        'Login': {
+            'Functionality': 'Allows users to log into their accounts.',
+            'User Interactions': 'Users enter their credentials and access their accounts.',
+            'Edge Cases': 'Incorrect login details, account lockout, or password reset issues.'
+        },
+        'Registration': {
+            'Functionality': 'Enables new users to create an account.',
+            'User Interactions': 'Users provide their details to register and create a new account.',
+            'Edge Cases': 'Duplicate account creation, invalid input details, or email verification issues.'
+        },
+        'Offers': {
+            'Functionality': 'Provides special discounts and promotional offers.',
+            'User Interactions': 'Users can view and apply offers during booking or payment.',
+            'Edge Cases': 'Expired offers, invalid offer codes, or offer application errors.'
+        },
+        'Filters': {
+            'Functionality': 'Allows users to filter search results based on various criteria.',
+            'User Interactions': 'Users can select filters like price range, bus type, or departure time.',
+            'Edge Cases': 'No results found with selected filters, filter conflicts, or slow response times.'
+        },
+        'Bus': {
+            'Functionality': 'Displays information about available buses.',
+            'User Interactions': 'Users can view bus details such as timings, amenities, and routes.',
+            'Edge Cases': 'Bus information not available, outdated schedules, or incorrect bus details.'
+        },
+        'Information': {
+            'Functionality': 'Provides general information about the service or system.',
+            'User Interactions': 'Users can access FAQs, contact details, or service descriptions.',
+            'Edge Cases': 'Incorrect or outdated information, access issues, or missing details.'
         },
         'Payment': {
             'Functionality': 'Handles financial transactions for bookings.',
             'User Interactions': 'Users enter payment details, apply discounts or offers, and complete the payment.',
             'Edge Cases': 'Payment failure, incorrect card details, or expired offers.'
         },
-        'Cancelation': {
-            'Functionality': 'Allows users to cancel bookings and request refunds.',
-            'User Interactions': 'Users can cancel their bookings and request refunds through their account settings.',
-            'Edge Cases': 'Cancellation deadlines, refund processing issues, or non-refundable bookings.'
+        'Bus Selection': {
+            'Functionality': 'Allows users to choose a specific bus from available options.',
+            'User Interactions': 'Users select a bus based on preferences like departure time, route, or amenities.',
+            'Edge Cases': 'Bus selection errors, unavailable options, or conflicting schedules.'
         },
-        'User Profile': {
-            'Functionality': 'Manages user account information and preferences.',
-            'User Interactions': 'Users can update personal information, review booking history, and manage settings.',
-            'Edge Cases': 'Profile update failures, incorrect personal information, or data synchronization issues.'
+        'Seat Selection': {
+            'Functionality': 'Enables users to choose their preferred seats.',
+            'User Interactions': 'Users select seats based on availability and preferences.',
+            'Edge Cases': 'Seat availability issues, conflicting seat selections, or booking errors.'
+        },
+        'Source': {
+            'Functionality': 'Allows users to specify the starting point of their journey.',
+            'User Interactions': 'Users enter or select their departure location.',
+            'Edge Cases': 'Invalid source location, no matches found, or location input errors.'
+        },
+        'Destination': {
+            'Functionality': 'Allows users to specify the end point of their journey.',
+            'User Interactions': 'Users enter or select their destination location.',
+            'Edge Cases': 'Invalid destination location, no matches found, or location input errors.'
+        },
+        'Date Selection': {
+            'Functionality': 'Enables users to choose the date for their journey.',
+            'User Interactions': 'Users select a date from a calendar or input it manually.',
+            'Edge Cases': 'Invalid date selection, past dates, or date conflicts.'
         }
-        
     }
     
     # Checking for feature based on extracted text
