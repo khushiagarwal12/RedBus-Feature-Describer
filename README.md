@@ -34,7 +34,7 @@ The RedBus Feature Describer is a tool that uses a multimodal LLM to describe fe
 2. **Navigate to the `backend` directory and install dependencies:**
 
     ```bash
-    cd RedBus-Feature-Describer/backend
+    cd RedBus-Feature-Describer
     pip install -r requirements.txt
     ```
 
@@ -46,7 +46,7 @@ The RedBus Feature Describer is a tool that uses a multimodal LLM to describe fe
     python app.py
     ```
 
-5. **Navigate to the `frontend` directory and ensure static files are correctly linked.**
+
 
 ### Usage
 
