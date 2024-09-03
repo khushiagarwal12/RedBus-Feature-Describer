@@ -21,7 +21,7 @@ The RedBus Feature Describer is a tool that uses a multimodal LLM to describe fe
 
 - Python 3.x
 - Flask
-- Required Python packages listed in `backend/requirements.txt`
+- Required Python packages listed in `requirements.txt`
 
 ### Installation
 
