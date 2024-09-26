@@ -28,7 +28,7 @@ The RedBus Feature Describer is a tool that uses a multimodal LLM to describe fe
 1. **Clone the repository:**
 
     ```bash
-    git clone https://github.com/yourusername/RedBus-Feature-Describer.git
+    git clone https://github.com/khushiagarwal12/RedBus-Feature-Describer.git
     ```
 
 2. **Navigate to the `backend` directory and install dependencies:**
